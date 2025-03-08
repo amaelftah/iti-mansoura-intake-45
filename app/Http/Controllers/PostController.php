@@ -54,6 +54,7 @@ class PostController extends Controller
 
         // dd( $title, $description);
 
-        return ;
+        return to_route('posts.show', 1);
+        // return to_route('posts.index');
     }
 }
