@@ -12,3 +12,5 @@ Route::get('/test', [TestController::class, 'someAction']);
 
 
 Route::get('/posts', [PostController::class, 'index']);
+
+Route::get('/posts/{post}', [PostController::class, 'show']);
