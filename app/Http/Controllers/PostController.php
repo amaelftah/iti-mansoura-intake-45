@@ -32,4 +32,9 @@ class PostController extends Controller
         // dd($id);
         return view('posts.show', ['post' => $post]);
     }
+
+    public function create()
+    {
+        return view('posts.create');
+    }
 }
