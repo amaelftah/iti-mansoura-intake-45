@@ -11,6 +11,8 @@ class TestController extends Controller //StudlyCase
         $localName = 'Mohamed';
         $age = 30;
         $email = '1234@gmail.com';
+
+        // dd($localName);
     
         return view('test', [
             'name' => $localName,
