@@ -37,4 +37,23 @@ class PostController extends Controller
     {
         return view('posts.create');
     }
+
+    public function store()
+    {
+        //1- get the form submission data into variable
+        //2- data validation
+        //3- store the data in database
+        //4- redirection
+
+        // $data = request()->all();
+        // $title = $data['title'];
+        // $description = $data['description'];
+
+        $title = request()->title;
+        $description = request()->description;
+
+        // dd( $title, $description);
+
+        return ;
+    }
 }
