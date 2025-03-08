@@ -7,5 +7,12 @@ Route::get('/', function () {
 });
 
 Route::get('/test', function () {
-    return view('changed-name');
+    $localName = 'Mohamed';
+    $age = 30;
+    $email = '1234@gmail.com';
+
+    return view('test', [
+        'name' => $localName,
+        'age' => $age
+    ]);
 });
