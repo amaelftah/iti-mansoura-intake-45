@@ -56,10 +56,26 @@ class PostController extends Controller
 
         $title = request()->title;
         $description = request()->description;
+        $postCreator = request()->post_creator;
 
-        // dd( $title, $description);
+        // dd($title, $description, $postCreator);
 
-        return to_route('posts.show', 1);
+        //insert into posts values (title,description,user_id)
+        // $post = new Post;
+ 
+        // $post->title = $title;
+        // $post->description = $description;
+        // $post->user_id = $postCreator;
+ 
+        // $post->save();
+
+        $post = Post::create([
+            'title' => $title,
+            'description' => $description,
+            'user_id' => $postCreator,
+        ]);
+
+        return to_route('posts.show', $post->id);
         // return to_route('posts.index');
     }
 }
