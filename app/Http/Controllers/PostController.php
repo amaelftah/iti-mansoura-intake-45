@@ -22,18 +22,16 @@ class PostController extends Controller
 
     public function show($id)
     {
-        $post = [
-            'id' => 1, 
-            'title' => 'laravel',
-            'description' => 'some description',
-            'posted_by' => [
-                'name' => 'ahmed',
-                'email' => 'test@gmail.com',
-                'created_at' => 'Thursday 25th of December 1975 02:15:16 PM'
-            ],
-            'created_at' => '2025-03-08 12:47:00',
-        ];
-        // dd($id);
+        //SELECT * FROM posts where id = 1 limit 1;
+        $post = Post::find($id);
+
+        //SELECT * FROM posts where id = 1;
+        // $anotherSyntax = Post::where('id', $id)->get(); // output collection object
+
+        //SELECT * FROM posts where id = 1 limit 1;
+        // $singlePost = Post::where('id', $id)->first();
+        // dd($singlePost);
+
         return view('posts.show', ['post' => $post]);
     }
 
