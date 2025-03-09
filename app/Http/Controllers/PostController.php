@@ -3,15 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Post;
 
 class PostController extends Controller
 {
     public function index()
     {
-        $posts = [
-            ['id' => 1, 'title' => 'laravel', 'posted_by' => 'ahmed', 'created_at' => '2025-03-08 12:47:00'],
-            ['id' => 2, 'title' => 'HTML', 'posted_by' => 'mohamed', 'created_at' => '2025-04-10 11:00:00'],
-        ];
+        //SELECT * FROM posts;
+        $posts = Post::all();
+
+        // //SELECT * FROM posts where title = 'Laravel';
+        // $laravelPosts = Post::where('title', '=', 'Laravel')->get();
+
+        // dd($posts, $laravelPosts); //output collection object
 
         return view('posts.index',['posts' => $posts]);
     }
