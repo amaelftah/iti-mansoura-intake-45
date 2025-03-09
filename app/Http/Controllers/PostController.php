@@ -3,39 +3,44 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Post;
+use App\Models\User;
 
 class PostController extends Controller
 {
     public function index()
     {
-        $posts = [
-            ['id' => 1, 'title' => 'laravel', 'posted_by' => 'ahmed', 'created_at' => '2025-03-08 12:47:00'],
-            ['id' => 2, 'title' => 'HTML', 'posted_by' => 'mohamed', 'created_at' => '2025-04-10 11:00:00'],
-        ];
+        //SELECT * FROM posts;
+        $posts = Post::all();
+
+        // //SELECT * FROM posts where title = 'Laravel';
+        // $laravelPosts = Post::where('title', '=', 'Laravel')->get();
+
+        // dd($posts, $laravelPosts); //output collection object
 
         return view('posts.index',['posts' => $posts]);
     }
 
     public function show($id)
     {
-        $post = [
-            'id' => 1, 
-            'title' => 'laravel',
-            'description' => 'some description',
-            'posted_by' => [
-                'name' => 'ahmed',
-                'email' => 'test@gmail.com',
-                'created_at' => 'Thursday 25th of December 1975 02:15:16 PM'
-            ],
-            'created_at' => '2025-03-08 12:47:00',
-        ];
-        // dd($id);
+        //SELECT * FROM posts where id = 1 limit 1;
+        $post = Post::find($id);
+
+        //SELECT * FROM posts where id = 1;
+        // $anotherSyntax = Post::where('id', $id)->get(); // output collection object
+
+        //SELECT * FROM posts where id = 1 limit 1;
+        // $singlePost = Post::where('id', $id)->first();
+        // dd($singlePost);
+
         return view('posts.show', ['post' => $post]);
     }
 
     public function create()
     {
-        return view('posts.create');
+        $users = User::all();
+
+        return view('posts.create', ['users' => $users]);
     }
 
     public function store()
@@ -51,10 +56,26 @@ class PostController extends Controller
 
         $title = request()->title;
         $description = request()->description;
+        $postCreator = request()->post_creator;
 
-        // dd( $title, $description);
+        // dd($title, $description, $postCreator);
 
-        return to_route('posts.show', 1);
+        //insert into posts values (title,description,user_id)
+        // $post = new Post;
+ 
+        // $post->title = $title;
+        // $post->description = $description;
+        // $post->user_id = $postCreator;
+ 
+        // $post->save();
+
+        $post = Post::create([
+            'title' => $title,
+            'description' => $description,
+            'user_id' => $postCreator,
+        ]);
+
+        return to_route('posts.show', $post->id);
         // return to_route('posts.index');
     }
 }
