@@ -1,14 +1,11 @@
 <?php
 
-use App\Http\Controllers\TestController;
-use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProfileController;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/test', [TestController::class, 'someAction']);
+use Inertia\Inertia;
+use App\Http\Controllers\PostController;
+use App\Models\Post;
 
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 
@@ -18,5 +15,26 @@ Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show')
 
 Route::post('posts', [PostController::class, 'store'])->name('posts.store');
 
-//1- change schema (create table , add column , remove column)
-//2- query on database (select , insert , update , delete)
+
+Route::get('/', function () {
+    return Inertia::render('Welcome', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+        'name' => 'Mohamed',
+        'posts' => Post::all(),
+    ]);
+});
+
+Route::get('/dashboard', function () {
+    return Inertia::render('Dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
