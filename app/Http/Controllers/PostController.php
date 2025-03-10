@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\User;
+use App\Http\Requests\StorePostRequest;
 
 class PostController extends Controller
 {
@@ -43,15 +44,20 @@ class PostController extends Controller
         return view('posts.create', ['users' => $users]);
     }
 
-    public function store()
+    public function store(StorePostRequest $request)
     {
-        request()->validate([
-            'title' => ['required', 'min:3'],
-            'description' => ['required', 'min:5'],
-        ],[
-            'title.required' => 'My Custom Message For Required',
-            'title.min' => 'override of min:3 chars',
-        ]);
+        // request()->validate([
+        //     'title' => ['required', 'min:3'],
+        //     'description' => ['required', 'min:5'],
+        // ],[
+        //     'title.required' => 'My Custom Message For Required',
+        //     'title.min' => 'override of min:3 chars',
+        // ]);
+
+        // $request->validate([
+        //     'title' => ['required', 'min:3'],
+        //     'description' => ['required', 'min:5'],
+        // ]);
 
         //1- get the form submission data into variable
         //2- data validation
