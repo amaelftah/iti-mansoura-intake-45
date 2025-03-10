@@ -5,9 +5,10 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\PostController;
+use App\Http\Middleware\AdminsOnly;
 use App\Models\Post;
 
-Route::middleware(['auth'])->get('/posts', [PostController::class, 'index'])->name('posts.index');
+Route::middleware(['auth', 'admins-only'])->get('/posts', [PostController::class, 'index'])->name('posts.index');
 
 Route::middleware(['auth'])->get('/posts/create', [PostController::class, 'create'])->name('posts.create');
 

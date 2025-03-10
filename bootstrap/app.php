@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\AdminsOnly;
+use App\Http\Middleware\TestGlobal;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -16,7 +18,18 @@ return Application::configure(basePath: dirname(__DIR__))
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
         ]);
 
-        //
+        $middleware->alias([
+            'admins-only' => AdminsOnly::class,
+        ]);
+
+        // $middleware->appendToGroup('group-name', [
+        //     First::class,
+        //     Second::class,
+        // ]);
+
+        // $middleware->append([
+        //     TestGlobal::class,
+        // ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
