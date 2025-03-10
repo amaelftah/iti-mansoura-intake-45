@@ -45,6 +45,14 @@ class PostController extends Controller
 
     public function store()
     {
+        request()->validate([
+            'title' => ['required', 'min:3'],
+            'description' => ['required', 'min:5'],
+        ],[
+            'title.required' => 'My Custom Message For Required',
+            'title.min' => 'override of min:3 chars',
+        ]);
+
         //1- get the form submission data into variable
         //2- data validation
         //3- store the data in database
